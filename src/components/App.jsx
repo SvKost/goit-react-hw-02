@@ -6,20 +6,18 @@ import Feedback from "./Feedback";
 import Notification from "./Notification";
 
 function App() {
-  const feedbackData = JSON.parse(localStorage.getItem("feedbackData"));
+  const [feedbackType, setFeedbackType] = useState({
+    good: 0,
+    neutral: 0,
+    bad: 0,
+  });
 
-  const [feedbackType, setFeedbackType] = useState(feedbackData);
-
-  const updateFeedback = (type) => {
+  const updateFeedback = (feedbackType) => {
     setFeedbackType((prevFeedback) => ({
       ...prevFeedback,
-      [type]: prevFeedback[type] + 1,
+      [feedbackType]: prevFeedback[feedbackType] + 1,
     }));
   };
-
-  useEffect(() => {
-    localStorage.setItem("feedbackData", JSON.stringify(feedbackType));
-  }, [feedbackType]);
 
   const totalFeedback =
     feedbackType.good + feedbackType.neutral + feedbackType.bad;
