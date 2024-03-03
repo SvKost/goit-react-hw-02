@@ -13,15 +13,19 @@ function App() {
   });
 
   const [showFeedback, setShowFeedback] = useState(false);
-  // const [totalFeedback, setTotalFeedback] = useState(0);
+  const [showResetFeedback, setResetFeedback] = useState(false);
 
   const updateFeedback = (feedbackType) => {
     setFeedbackType((prevFeedback) => ({
       ...prevFeedback,
       [feedbackType]: prevFeedback[feedbackType] + 1,
     }));
-    setShowFeedback(true);
+    setShowFeedback((prevState) => !prevState);
+    setResetFeedback((prevState) => !prevState);
   };
+
+  const totalFeedback =
+    feedbackType.good + feedbackType.neutral + feedbackType.bad;
 
   const resetFeedback = () => {
     setFeedbackType({
@@ -29,28 +33,30 @@ function App() {
       neutral: 0,
       bad: 0,
     });
-    setShowFeedback(false);
-    // setTotalFeedback(0);
+    setShowFeedback((prevState) => !prevState);
+    setResetFeedback((prevState) => !prevState);
   };
-
-  const totalFeedback =
-    feedbackType.good + feedbackType.neutral + feedbackType.bad;
 
   return (
     <div>
       <Description />
+
       <Options
         updateFeedback={updateFeedback}
-        resetFeedback={resetFeedback}
         totalFeedback={totalFeedback}
+        resetFeedback={resetFeedback}
       />
-      <Notification />
-
-      <Feedback
-        good={feedbackType.good}
-        neutral={feedbackType.neutral}
-        bad={feedbackType.bad}
-      />
+      {totalFeedback > 0 ? (
+        <div>
+          <Feedback
+            good={feedbackType.good}
+            neutral={feedbackType.neutral}
+            bad={feedbackType.bad}
+          />
+        </div>
+      ) : (
+        <Notification />
+      )}
     </div>
   );
 }

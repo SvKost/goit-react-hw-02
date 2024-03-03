@@ -12,9 +12,11 @@ const Options = ({ updateFeedback, resetFeedback, totalFeedback }) => {
         Bad
       </button>
 
-      <button onClick={resetFeedback} type="button">
-        Reset
-      </button>
+      {totalFeedback > 0 && (
+        <button onClick={resetFeedback} type="button">
+          Reset
+        </button>
+      )}
     </div>
   );
 };
