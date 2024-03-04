@@ -1,0 +1,10 @@
+.buttonsWrapper {
+  display: flex;
+  gap: 8px;
+}
+
+.feedbackButton {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
